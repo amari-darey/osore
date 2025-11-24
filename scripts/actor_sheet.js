@@ -11,10 +11,10 @@ export default class OsoreActorSheet extends ActorSheet {
     });
   }
 
-  getData(options = {}) {
-    const data = super.getData(options);
+  getData() {
+    const data = super.getData();
 
-    const currentChar = this.actor.getFlag("osore", "currentChar") || 1;
+    const currentChar = data.actor.system.activeCharacter;
     const charKey = `character_${currentChar}`;
     const current = foundry.utils.getProperty(this.actor.system, charKey) || {};
 
@@ -24,9 +24,8 @@ export default class OsoreActorSheet extends ActorSheet {
       return Array.from({ length: 7 }, (_, i) => i === pos);
     };
 
-    const stats = current.stats || { complexion: 0, mind: 0, character: 0, endurance: 0 };
+    const stats = current.stats;
 
-    data.currentChar = currentChar;
     data.current = current;
     data.activePath = `system.character_${currentChar}`;
     data.isActive1 = currentChar === 1;
@@ -35,11 +34,12 @@ export default class OsoreActorSheet extends ActorSheet {
     data.isActive4 = currentChar === 4;
 
     data.cells = {
-      complexion: cellsFromValue(stats.complexion),
-      mind:       cellsFromValue(stats.mind),
-      character:  cellsFromValue(stats.character),
-      endurance:  cellsFromValue(stats.endurance)
+      complexion: cellsFromValue(stats.complexion.value),
+      mind:       cellsFromValue(stats.mind.value),
+      character:  cellsFromValue(stats.character.value),
+      endurance:  cellsFromValue(stats.endurance.value)
     };
+    console.log(data.cells)
 
     return data;
   }
@@ -51,7 +51,7 @@ export default class OsoreActorSheet extends ActorSheet {
       ev.preventDefault();
       const newChar = Number(ev.currentTarget.dataset.character);
       if (!newChar || newChar < 1 || newChar > 4) return;
-      await this.actor.setFlag("osore", "currentChar", newChar);
+      this.actor.system.activeCharacter = newChar;
       this.render(true);
     });
 
