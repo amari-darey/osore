@@ -1,0 +1,218 @@
+<form class="sheet actor osore-sheet" data-actor-id="{{actor.id}}">
+  <div class="line">
+    <div class="col-avatar">
+      <img src="systems/osore/assets/avatar.png" alt="avatar">
+    </div>
+    <div class="col-main">
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>РОД ЗАНЯТИЙ</h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.occupation" value="{{actor.system.info.occupation}}" placeholder="1 Инвалид">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ВНЕШНИЙ ВИД</h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.look" value="{{actor.system.info.look}}" placeholder="1 Уродливый">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ПОВЕДЕНИЕ</h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.behaviour" value="{{actor.system.info.behaviour}}" placeholder="1 Яндаре">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ИНТЕРЕСЫ</h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.interests" value="{{actor.system.info.interests}}" placeholder="1 Наркотики">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ЦЕЛЬ</h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.goal" value="{{actor.system.info.goal}}" placeholder="1 Сходить с ума">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>НАЧАЛЬНАЯ ПОЗИЦИЯ</h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.startPosition" value="{{actor.system.info.startPosition}}" placeholder="1 Разрушенное убежище">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <h5>УГРОЗА ЖИЗНИ</h5>
+        <div class="checkbox-group">
+          <input type="checkbox" name="system.status.threat1" {{#if actor.system.status.threat1}}checked{{/if}}>
+          <input type="checkbox" name="system.status.threat2" {{#if actor.system.status.threat2}}checked{{/if}}>
+          <input type="checkbox" name="system.status.threat3" {{#if actor.system.status.threat3}}checked{{/if}}>
+        </div>
+      </div>
+    </div>
+    <div class="col-dice">
+      <img src="systems/osore/assets/revers_dice.png" alt="revers_dice">
+    </div>
+  </div>
+
+  <div class="line">
+    <div class="col-main col-main-full-width">
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ИМЯ / </h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="name" value="{{actor.name}}" placeholder="Имя">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ВОЗРАСТ / </h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.age" value="{{actor.system.info.age}}" placeholder="19">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>ДЕНЬ РОЖДЕНИЯ / </h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.dob" value="{{actor.system.info.dob}}" placeholder="01.01.1990">
+        </div>
+      </div>
+
+      <div class="description-line">
+        <div class="char-description-line1">
+          <h5>РОСТ / </h5>
+        </div>
+        <div class="inputs-column">
+          <input type="text" name="system.info.height" value="{{actor.system.info.height}}" placeholder="165см">
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-container">
+      <div class="stats-wrap">
+        <div class="stat-names">
+          <div class="stat-name">КОМплекция</div>
+          <div class="stat-name">РАЗум</div>
+          <div class="stat-name">ХАРактер</div>
+          <div class="stat-name">СТОйкость</div>
+        </div>
+      </div>
+
+      <div class="frame" role="figure" aria-label="Реплика шкалы">
+        <div class="ruler" aria-hidden="false">
+          <div class="labels" aria-hidden="true">
+            <div class="label">+3</div>
+            <div class="label">+2</div>
+            <div class="label">+1</div>
+            <div class="label">0</div>
+            <div class="label">-1</div>
+            <div class="label">-2</div>
+            <div class="label">-3</div>
+          </div>
+
+          <div class="group outer-column">
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell is-zero"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+          </div>
+
+          <div class="group">
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell is-zero"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+          </div>
+
+          <div class="group">
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell is-zero"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+          </div>
+
+          <div class="group outer-column">
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell is-zero"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+            <div class="cell"><span class="circle"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="small-numbers-container">
+    <div class="small-numer">
+      <input type="number" name="system.small.g1.n1" min="0" value="{{actor.system.small.g1.n1}}">
+      <input type="number" name="system.small.g1.n2" min="0" value="{{actor.system.small.g1.n2}}">
+      <input type="number" name="system.small.g1.n3" min="0" value="{{actor.system.small.g1.n3}}">
+      <input type="number" name="system.small.g1.n4" min="0" value="{{actor.system.small.g1.n4}}">
+      <input type="number" name="system.small.g1.n5" min="0" value="{{actor.system.small.g1.n5}}">
+      <input type="number" name="system.small.g1.n6" min="0" value="{{actor.system.small.g1.n6}}">
+      <input type="number" name="system.small.g1.n7" min="0" value="{{actor.system.small.g1.n7}}">
+      <input type="number" name="system.small.g1.n8" min="0" value="{{actor.system.small.g1.n8}}">
+      <input type="number" name="system.small.g1.n9" min="0" value="{{actor.system.small.g1.n9}}">
+    </div>
+
+    <div class="small-numer">
+      <input type="number" name="system.small.g2.n1" min="0" value="{{actor.system.small.g2.n1}}">
+      <input type="number" name="system.small.g2.n2" min="0" value="{{actor.system.small.g2.n2}}">
+      <input type="number" name="system.small.g2.n3" min="0" value="{{actor.system.small.g2.n3}}">
+      <input type="number" name="system.small.g2.n4" min="0" value="{{actor.system.small.g2.n4}}">
+      <input type="number" name="system.small.g2.n5" min="0" value="{{actor.system.small.g2.n5}}">
+      <input type="number" name="system.small.g2.n6" min="0" value="{{actor.system.small.g2.n6}}">
+      <input type="number" name="system.small.g2.n7" min="0" value="{{actor.system.small.g2.n7}}">
+      <input type="number" name="system.small.g2.n8" min="0" value="{{actor.system.small.g2.n8}}">
+      <input type="number" name="system.small.g2.n9" min="0" value="{{actor.system.small.g2.n9}}">
+    </div>
+
+    <div class="small-numer">
+      <input type="number" name="system.small.g3.n1" min="0" value="{{actor.system.small.g3.n1}}">
+      <input type="number" name="system.small.g3.n2" min="0" value="{{actor.system.small.g3.n2}}">
+      <input type="number" name="system.small.g3.n3" min="0" value="{{actor.system.small.g3.n3}}">
+      <input type="number" name="system.small.g3.n4" min="0" value="{{actor.system.small.g3.n4}}">
+      <input type="number" name="system.small.g3.n5" min="0" value="{{actor.system.small.g3.n5}}">
+      <input type="number" name="system.small.g3.n6" min="0" value="{{actor.system.small.g3.n6}}">
+      <input type="number" name="system.small.g3.n7" min="0" value="{{actor.system.small.g3.n7}}">
+      <input type="number" name="system.small.g3.n8" min="0" value="{{actor.system.small.g3.n8}}">
+      <input type="number" name="system.small.g3.n9" min="0" value="{{actor.system.small.g3.n9}}">
+    </div>
+  </div>
+</form>
+

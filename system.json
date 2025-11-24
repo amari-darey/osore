@@ -1,0 +1,21 @@
+{
+  "id": "osore",
+  "name": "osore",
+  "title": "OSORE",
+  "description": "You can’t sleep. It started like that for all of us, back when we were garden variety insomniacs. Maybe you had nightmares (God knows we all do now), or maybe you just had problems that wouldn’t let you sleep. Hell, maybe you were just over-caffienated. But then something clicked.",
+  "author": "Amari",
+  "version": 0.01, 
+  "minimumCoreVersion": "13",
+  "compatibleCoreVersion": "13",
+  "esmodules": [
+    "scripts/osore.js"
+  ],
+  "styles": [
+    {
+      "src":"styles/style.css"
+    }
+  ],
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "initiative": "1d20"
+}
