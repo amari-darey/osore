@@ -141,42 +141,26 @@
           </div>
 
           <div class="group outer-column">
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell is-zero"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
+            {{#each cells.complexion}}
+              <div class="cell {{#if this}}active{{/if}}"><span class="circle"></span></div>
+            {{/each}}
           </div>
           <div class="group">
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell is-zero"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
+            {{#each cells.mind}}
+              <div class="cell {{#if this}}active{{/if}}"><span class="circle"></span></div>
+            {{/each}}
           </div>
 
           <div class="group">
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell is-zero"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
+            {{#each cells.character}}
+              <div class="cell {{#if this}}active{{/if}}"><span class="circle"></span></div>
+            {{/each}}
           </div>
 
           <div class="group outer-column">
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell is-zero"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
-            <div class="cell"><span class="circle"></span></div>
+            {{#each cells.endurance}}
+              <div class="cell {{#if this}}active{{/if}}"><span class="circle"></span></div>
+            {{/each}}
           </div>
         </div>
       </div>
