@@ -3,8 +3,242 @@
         "types": ["Survivor"]
     },
     "Survivor": {
-        "test": {
-            "value": 0
+        "activeCharacter": 1,
+        "character_1": {
+            "info": {
+            "occupation": "",
+            "look": "",
+            "behaviour": "",
+            "interests": "",
+            "goal": "",
+            "startPosition": "",
+            "age": "",
+            "dob": "",
+            "height": ""
+            },
+            "status": {
+                "threat1": false,
+                "threat2": false,
+                "threat3": false
+            },
+            "small": {
+                "g1": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g2": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g3": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                }
+            },
+            "stats": {
+                "complexion": 0,
+                "mind": 0,
+                "character": 0,
+                "endurance": 0
+            }
+        },
+        "character_2": {
+            "info": {
+            "occupation": "",
+            "look": "",
+            "behaviour": "",
+            "interests": "",
+            "goal": "",
+            "startPosition": "",
+            "age": "",
+            "dob": "",
+            "height": ""
+            },
+            "status": {
+                "threat1": false,
+                "threat2": false,
+                "threat3": false
+            },
+            "small": {
+                "g1": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g2": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g3": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                }
+            },
+            "stats": {
+                "complexion": 0,
+                "mind": 0,
+                "character": 0,
+                "endurance": 0
+            }
+        },
+        "character_3": {
+            "info": {
+            "occupation": "",
+            "look": "",
+            "behaviour": "",
+            "interests": "",
+            "goal": "",
+            "startPosition": "",
+            "age": "",
+            "dob": "",
+            "height": ""
+            },
+            "status": {
+                "threat1": false,
+                "threat2": false,
+                "threat3": false
+            },
+            "small": {
+                "g1": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g2": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g3": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                }
+            },
+            "stats": {
+                "complexion": 0,
+                "mind": 0,
+                "character": 0,
+                "endurance": 0
+            }
+        },
+        "character_4": {
+            "info": {
+            "occupation": "",
+            "look": "",
+            "behaviour": "",
+            "interests": "",
+            "goal": "",
+            "startPosition": "",
+            "age": "",
+            "dob": "",
+            "height": ""
+            },
+            "status": {
+                "threat1": false,
+                "threat2": false,
+                "threat3": false
+            },
+            "small": {
+                "g1": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g2": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                },
+                "g3": {
+                "n1": 0,
+                "n2": 0,
+                "n3": 0,
+                "n4": 0,
+                "n5": 0,
+                "n6": 0,
+                "n7": 0,
+                "n8": 0,
+                "n9": 0
+                }
+            },
+            "stats": {
+                "complexion": 0,
+                "mind": 0,
+                "character": 0,
+                "endurance": 0
+            }
         }
     }
 }

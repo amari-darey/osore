@@ -1,4 +1,11 @@
 <form class="sheet actor osore-sheet" data-actor-id="{{actor.id}}">
+  <div class="character-switcher">
+    <button type="button" class="char-btn {{#if isActive1}}active{{/if}}" data-character="1">Персонаж 1</button>
+    <button type="button" class="char-btn {{#if isActive2}}active{{/if}}" data-character="2">Персонаж 2</button>
+    <button type="button" class="char-btn {{#if isActive3}}active{{/if}}" data-character="3">Персонаж 3</button>
+    <button type="button" class="char-btn {{#if isActive4}}active{{/if}}" data-character="4">Персонаж 4</button>
+  </div>
+
   <div class="line">
     <div class="col-avatar">
       <img src="systems/osore/assets/avatar.png" alt="avatar">
@@ -9,7 +16,7 @@
           <h5>РОД ЗАНЯТИЙ</h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.occupation" value="{{actor.system.info.occupation}}" placeholder="1 Инвалид">
+          <input type="text" name="{{activePath}}.info.occupation" value="{{current.info.occupation}}" placeholder="1 Инвалид">
         </div>
       </div>
 
@@ -18,7 +25,7 @@
           <h5>ВНЕШНИЙ ВИД</h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.look" value="{{actor.system.info.look}}" placeholder="1 Уродливый">
+          <input type="text" name="{{activePath}}.info.look" value="{{current.info.look}}" placeholder="1 Уродливый">
         </div>
       </div>
 
@@ -27,7 +34,7 @@
           <h5>ПОВЕДЕНИЕ</h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.behaviour" value="{{actor.system.info.behaviour}}" placeholder="1 Яндаре">
+          <input type="text" name="{{activePath}}.info.behaviour" value="{{current.info.behaviour}}" placeholder="1 Яндаре">
         </div>
       </div>
 
@@ -36,7 +43,7 @@
           <h5>ИНТЕРЕСЫ</h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.interests" value="{{actor.system.info.interests}}" placeholder="1 Наркотики">
+          <input type="text" name="{{activePath}}.info.interests" value="{{current.info.interests}}" placeholder="1 Наркотики">
         </div>
       </div>
 
@@ -45,7 +52,7 @@
           <h5>ЦЕЛЬ</h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.goal" value="{{actor.system.info.goal}}" placeholder="1 Сходить с ума">
+          <input type="text" name="{{activePath}}.info.goal" value="{{current.info.goal}}" placeholder="1 Сходить с ума">
         </div>
       </div>
 
@@ -54,16 +61,16 @@
           <h5>НАЧАЛЬНАЯ ПОЗИЦИЯ</h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.startPosition" value="{{actor.system.info.startPosition}}" placeholder="1 Разрушенное убежище">
+          <input type="text" name="{{activePath}}.info.startPosition" value="{{current.info.startPosition}}" placeholder="1 Разрушенное убежище">
         </div>
       </div>
 
       <div class="description-line">
         <h5>УГРОЗА ЖИЗНИ</h5>
         <div class="checkbox-group">
-          <input type="checkbox" name="system.status.threat1" {{#if actor.system.status.threat1}}checked{{/if}}>
-          <input type="checkbox" name="system.status.threat2" {{#if actor.system.status.threat2}}checked{{/if}}>
-          <input type="checkbox" name="system.status.threat3" {{#if actor.system.status.threat3}}checked{{/if}}>
+          <input type="checkbox" name="{{activePath}}.status.threat1" {{#if current.status.threat1}}checked{{/if}}>
+          <input type="checkbox" name="{{activePath}}.status.threat2" {{#if current.status.threat2}}checked{{/if}}>
+          <input type="checkbox" name="{{activePath}}.status.threat3" {{#if current.status.threat3}}checked{{/if}}>
         </div>
       </div>
     </div>
@@ -88,7 +95,7 @@
           <h5>ВОЗРАСТ / </h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.age" value="{{actor.system.info.age}}" placeholder="19">
+          <input type="text" name="{{activePath}}.info.age" value="{{current.info.age}}" placeholder="19">
         </div>
       </div>
 
@@ -97,7 +104,7 @@
           <h5>ДЕНЬ РОЖДЕНИЯ / </h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.dob" value="{{actor.system.info.dob}}" placeholder="01.01.1990">
+          <input type="text" name="{{activePath}}.info.dob" value="{{current.info.dob}}" placeholder="01.01.1990">
         </div>
       </div>
 
@@ -106,7 +113,7 @@
           <h5>РОСТ / </h5>
         </div>
         <div class="inputs-column">
-          <input type="text" name="system.info.height" value="{{actor.system.info.height}}" placeholder="165см">
+          <input type="text" name="{{activePath}}.info.height" value="{{current.info.height}}" placeholder="165см">
         </div>
       </div>
     </div>
@@ -142,7 +149,6 @@
             <div class="cell"><span class="circle"></span></div>
             <div class="cell"><span class="circle"></span></div>
           </div>
-
           <div class="group">
             <div class="cell"><span class="circle"></span></div>
             <div class="cell"><span class="circle"></span></div>
@@ -179,39 +185,39 @@
 
   <div class="small-numbers-container">
     <div class="small-numer">
-      <input type="number" name="system.small.g1.n1" min="0" value="{{actor.system.small.g1.n1}}">
-      <input type="number" name="system.small.g1.n2" min="0" value="{{actor.system.small.g1.n2}}">
-      <input type="number" name="system.small.g1.n3" min="0" value="{{actor.system.small.g1.n3}}">
-      <input type="number" name="system.small.g1.n4" min="0" value="{{actor.system.small.g1.n4}}">
-      <input type="number" name="system.small.g1.n5" min="0" value="{{actor.system.small.g1.n5}}">
-      <input type="number" name="system.small.g1.n6" min="0" value="{{actor.system.small.g1.n6}}">
-      <input type="number" name="system.small.g1.n7" min="0" value="{{actor.system.small.g1.n7}}">
-      <input type="number" name="system.small.g1.n8" min="0" value="{{actor.system.small.g1.n8}}">
-      <input type="number" name="system.small.g1.n9" min="0" value="{{actor.system.small.g1.n9}}">
+      <input type="number" name="{{activePath}}.small.g1.n1" min="0" value="{{current.small.g1.n1}}">
+      <input type="number" name="{{activePath}}.small.g1.n2" min="0" value="{{current.small.g1.n2}}">
+      <input type="number" name="{{activePath}}.small.g1.n3" min="0" value="{{current.small.g1.n3}}">
+      <input type="number" name="{{activePath}}.small.g1.n4" min="0" value="{{current.small.g1.n4}}">
+      <input type="number" name="{{activePath}}.small.g1.n5" min="0" value="{{current.small.g1.n5}}">
+      <input type="number" name="{{activePath}}.small.g1.n6" min="0" value="{{current.small.g1.n6}}">
+      <input type="number" name="{{activePath}}.small.g1.n7" min="0" value="{{current.small.g1.n7}}">
+      <input type="number" name="{{activePath}}.small.g1.n8" min="0" value="{{current.small.g1.n8}}">
+      <input type="number" name="{{activePath}}.small.g1.n9" min="0" value="{{current.small.g1.n9}}">
     </div>
 
     <div class="small-numer">
-      <input type="number" name="system.small.g2.n1" min="0" value="{{actor.system.small.g2.n1}}">
-      <input type="number" name="system.small.g2.n2" min="0" value="{{actor.system.small.g2.n2}}">
-      <input type="number" name="system.small.g2.n3" min="0" value="{{actor.system.small.g2.n3}}">
-      <input type="number" name="system.small.g2.n4" min="0" value="{{actor.system.small.g2.n4}}">
-      <input type="number" name="system.small.g2.n5" min="0" value="{{actor.system.small.g2.n5}}">
-      <input type="number" name="system.small.g2.n6" min="0" value="{{actor.system.small.g2.n6}}">
-      <input type="number" name="system.small.g2.n7" min="0" value="{{actor.system.small.g2.n7}}">
-      <input type="number" name="system.small.g2.n8" min="0" value="{{actor.system.small.g2.n8}}">
-      <input type="number" name="system.small.g2.n9" min="0" value="{{actor.system.small.g2.n9}}">
+      <input type="number" name="{{activePath}}.small.g2.n1" min="0" value="{{current.small.g2.n1}}">
+      <input type="number" name="{{activePath}}.small.g2.n2" min="0" value="{{current.small.g2.n2}}">
+      <input type="number" name="{{activePath}}.small.g2.n3" min="0" value="{{current.small.g2.n3}}">
+      <input type="number" name="{{activePath}}.small.g2.n4" min="0" value="{{current.small.g2.n4}}">
+      <input type="number" name="{{activePath}}.small.g2.n5" min="0" value="{{current.small.g2.n5}}">
+      <input type="number" name="{{activePath}}.small.g2.n6" min="0" value="{{current.small.g2.n6}}">
+      <input type="number" name="{{activePath}}.small.g2.n7" min="0" value="{{current.small.g2.n7}}">
+      <input type="number" name="{{activePath}}.small.g2.n8" min="0" value="{{current.small.g2.n8}}">
+      <input type="number" name="{{activePath}}.small.g2.n9" min="0" value="{{current.small.g2.n9}}">
     </div>
 
     <div class="small-numer">
-      <input type="number" name="system.small.g3.n1" min="0" value="{{actor.system.small.g3.n1}}">
-      <input type="number" name="system.small.g3.n2" min="0" value="{{actor.system.small.g3.n2}}">
-      <input type="number" name="system.small.g3.n3" min="0" value="{{actor.system.small.g3.n3}}">
-      <input type="number" name="system.small.g3.n4" min="0" value="{{actor.system.small.g3.n4}}">
-      <input type="number" name="system.small.g3.n5" min="0" value="{{actor.system.small.g3.n5}}">
-      <input type="number" name="system.small.g3.n6" min="0" value="{{actor.system.small.g3.n6}}">
-      <input type="number" name="system.small.g3.n7" min="0" value="{{actor.system.small.g3.n7}}">
-      <input type="number" name="system.small.g3.n8" min="0" value="{{actor.system.small.g3.n8}}">
-      <input type="number" name="system.small.g3.n9" min="0" value="{{actor.system.small.g3.n9}}">
+      <input type="number" name="{{activePath}}.small.g3.n1" min="0" value="{{current.small.g3.n1}}">
+      <input type="number" name="{{activePath}}.small.g3.n2" min="0" value="{{current.small.g3.n2}}">
+      <input type="number" name="{{activePath}}.small.g3.n3" min="0" value="{{current.small.g3.n3}}">
+      <input type="number" name="{{activePath}}.small.g3.n4" min="0" value="{{current.small.g3.n4}}">
+      <input type="number" name="{{activePath}}.small.g3.n5" min="0" value="{{current.small.g3.n5}}">
+      <input type="number" name="{{activePath}}.small.g3.n6" min="0" value="{{current.small.g3.n6}}">
+      <input type="number" name="{{activePath}}.small.g3.n7" min="0" value="{{current.small.g3.n7}}">
+      <input type="number" name="{{activePath}}.small.g3.n8" min="0" value="{{current.small.g3.n8}}">
+      <input type="number" name="{{activePath}}.small.g3.n9" min="0" value="{{current.small.g3.n9}}">
     </div>
   </div>
 </form>

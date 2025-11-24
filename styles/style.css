@@ -11,6 +11,7 @@
 --muted: #6b6b6b;
 }
 
+.window-header{color:#2a2a2a}
 
 .sheet.actor.osore-sheet{
 max-width:840px;margin:24px auto;padding:20px;border:6px solid var(--ink);background:linear-gradient(180deg, #fff, #f3f3f1);
@@ -81,6 +82,35 @@ gap:12px;
 flex-wrap:wrap;
 justify-content:center;
 margin-top:20px;
+}
+
+.character-switcher {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.character-switcher .char-btn {
+    padding: 4px 10px;
+    font-size: 14px;
+    background: #2a2a2a;
+    color: #ddd;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.character-switcher .char-btn:hover {
+    background: #3a3a3a;
+    border-color: #666;
+}
+
+.character-switcher .char-btn.active {
+    background: #d9534f;
+    color: white;
+    border-color: #b52b27;
+    box-shadow: 0 0 4px #d9534f88;
 }
 
 @media (max-width:920px){
