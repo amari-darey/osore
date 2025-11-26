@@ -201,6 +201,16 @@ margin-top:20px;
   box-shadow: 0 0 6px #d9534f66;
 }
 
+.form-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 840px;
+  height: 690px;
+  z-index: 100;
+  pointer-events: none;
+}
+
 svg.graph-overlay {
   position: absolute;
   top: 0;
