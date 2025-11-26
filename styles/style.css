@@ -115,6 +115,25 @@ margin-top:20px;
     transform: scale(1.05);
 }
 
+.schema-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.schema-input {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  border: 2px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.04);
+  color: var(--ink, #111);
+  font-size: 24px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
 .character-switcher {
     display: flex;
     gap: 6px;

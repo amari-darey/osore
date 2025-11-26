@@ -116,9 +116,12 @@
           <input type="text" name="{{activePath}}.info.height" value="{{current.info.height}}" placeholder="165см">
         </div>
       </div>
-      <button type="button" class="button-schema-image">
-        <img src="systems/osore/assets/scheme/schema{{schema}}.png" alt="Схема" class="schema-image">
-      </button>
+      <div class="schema-row">
+        <button type="button" class="button-schema-image">
+          <img src="systems/osore/assets/scheme/schema{{schema}}.png" alt="Схема" class="schema-image">
+        </button>
+        <input type="number" class="schema-input" name="difficult" min="0" value="{{current.roll_difficult}}" readonly>
+      </div>
     </div>
 
     <div class="stats-container">
@@ -167,44 +170,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="small-numbers-container">
-    <div class="small-numer">
-      <input type="number" name="{{activePath}}.small.g1.n1" min="0" value="{{current.small.g1.n1}}">
-      <input type="number" name="{{activePath}}.small.g1.n2" min="0" value="{{current.small.g1.n2}}">
-      <input type="number" name="{{activePath}}.small.g1.n3" min="0" value="{{current.small.g1.n3}}">
-      <input type="number" name="{{activePath}}.small.g1.n4" min="0" value="{{current.small.g1.n4}}">
-      <input type="number" name="{{activePath}}.small.g1.n5" min="0" value="{{current.small.g1.n5}}">
-      <input type="number" name="{{activePath}}.small.g1.n6" min="0" value="{{current.small.g1.n6}}">
-      <input type="number" name="{{activePath}}.small.g1.n7" min="0" value="{{current.small.g1.n7}}">
-      <input type="number" name="{{activePath}}.small.g1.n8" min="0" value="{{current.small.g1.n8}}">
-      <input type="number" name="{{activePath}}.small.g1.n9" min="0" value="{{current.small.g1.n9}}">
-    </div>
-
-    <div class="small-numer">
-      <input type="number" name="{{activePath}}.small.g2.n1" min="0" value="{{current.small.g2.n1}}">
-      <input type="number" name="{{activePath}}.small.g2.n2" min="0" value="{{current.small.g2.n2}}">
-      <input type="number" name="{{activePath}}.small.g2.n3" min="0" value="{{current.small.g2.n3}}">
-      <input type="number" name="{{activePath}}.small.g2.n4" min="0" value="{{current.small.g2.n4}}">
-      <input type="number" name="{{activePath}}.small.g2.n5" min="0" value="{{current.small.g2.n5}}">
-      <input type="number" name="{{activePath}}.small.g2.n6" min="0" value="{{current.small.g2.n6}}">
-      <input type="number" name="{{activePath}}.small.g2.n7" min="0" value="{{current.small.g2.n7}}">
-      <input type="number" name="{{activePath}}.small.g2.n8" min="0" value="{{current.small.g2.n8}}">
-      <input type="number" name="{{activePath}}.small.g2.n9" min="0" value="{{current.small.g2.n9}}">
-    </div>
-
-    <div class="small-numer">
-      <input type="number" name="{{activePath}}.small.g3.n1" min="0" value="{{current.small.g3.n1}}">
-      <input type="number" name="{{activePath}}.small.g3.n2" min="0" value="{{current.small.g3.n2}}">
-      <input type="number" name="{{activePath}}.small.g3.n3" min="0" value="{{current.small.g3.n3}}">
-      <input type="number" name="{{activePath}}.small.g3.n4" min="0" value="{{current.small.g3.n4}}">
-      <input type="number" name="{{activePath}}.small.g3.n5" min="0" value="{{current.small.g3.n5}}">
-      <input type="number" name="{{activePath}}.small.g3.n6" min="0" value="{{current.small.g3.n6}}">
-      <input type="number" name="{{activePath}}.small.g3.n7" min="0" value="{{current.small.g3.n7}}">
-      <input type="number" name="{{activePath}}.small.g3.n8" min="0" value="{{current.small.g3.n8}}">
-      <input type="number" name="{{activePath}}.small.g3.n9" min="0" value="{{current.small.g3.n9}}">
     </div>
   </div>
 </form>

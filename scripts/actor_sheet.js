@@ -8,7 +8,7 @@ export default class OsoreActorSheet extends ActorSheet {
             classes: ["osore", "sheet", "actor", "osore-sheet"],
             template: "systems/osore/templates/actor-sheet.html",
             width: 840,
-            height: 850,
+            height: 690,
             resizable: true,
             minimizable: true,
             tabs: [{ nav: ".sheet-tabs", content: ".sheet-body", initial: "main" }]
@@ -65,11 +65,17 @@ export default class OsoreActorSheet extends ActorSheet {
         })
 
         html.find(".stat-name").click(async el => {
-            const charKey = `character_${this.actor.system.activeCharacter}.stats.${el.currentTarget.dataset.stat}`;
-            const skill = foundry.utils.getProperty(this.actor.system, charKey);
+            const charKey = `character_${this.actor.system.activeCharacter}`;
+            const current = foundry.utils.getProperty(this.actor.system, charKey);
+            const skill = foundry.utils.getProperty(current, `stats.${el.currentTarget.dataset.stat}`);
             if (skill) {
                 const roll = new Roll(`1d20+${skill.value}`);
                 await roll.evaluate();
+                if (roll.total >= current.roll_difficult) {
+                    current.roll_difficult = REVERS_DICE[roll.terms[0].results[0].result]
+                } else {
+                    current.roll_difficult = 10
+                }
                 roll.toMessage({
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                     flavor: `Проверка навыка: <b>${TRANSLATE[el.currentTarget.dataset.stat]}</b>`,
@@ -77,6 +83,7 @@ export default class OsoreActorSheet extends ActorSheet {
             } else {
                 console.error("Skill is", skill)
             }
+            this.render(true);
         })
 
         requestAnimationFrame(() => drawGraphLines(html));
