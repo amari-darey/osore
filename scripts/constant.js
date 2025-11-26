@@ -35,7 +35,7 @@ export const SCHEME = {
     3: {
         "link1":["occupation", "interests"],
         "link2":["goal", "behaviour"],
-        "link3":["startPosition", "interests"]
+        "link3":["startPosition", "look"]
     },
     4: "pass",
     5: {
@@ -60,7 +60,7 @@ export const SCHEME = {
         "link3":["behaviour", "startPosition"]
     },
     10: {
-        "link1":["goal", "startPosition"],
+        "link1":["goal", "behaviour"],
         "link2":["occupation", "startPosition"],
         "link3":["interests", "look"]
     },
