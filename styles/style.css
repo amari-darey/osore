@@ -33,8 +33,7 @@ form.sheet-body{display:flex;flex-direction:column;gap:14px}
 .inputs-column{flex:1;display:flex;justify-content:flex-end}
 .inputs-column input[type="text"]{width:100%;max-width:320px;padding:6px 10px;border:2px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.92);font-family:inherit}
 
-.checkbox-group{display:flex;gap:136px;align-items:center}
-.checkbox-group input{width:18px;height:18px}
+.checkbox-group{display:flex;align-items:center}
 
 .small-numer{display:flex;gap:8px;align-items:center}
 .small-numer input[type="number"]{width:40px;margin-left: 26px;padding:6px;border:2px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.95)}
@@ -125,6 +124,19 @@ margin-top:20px;
 .schema-input {
   width: 60px;
   height: 60px;
+  border-radius: 6px;
+  border: 2px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.04);
+  color: var(--ink, #111);
+  font-size: 24px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.death-input {
+  width: 60px;
+  height: 20px;
+  margin-left: 20px;
   border-radius: 6px;
   border: 2px solid rgba(0,0,0,0.08);
   background: rgba(255,255,255,0.04);

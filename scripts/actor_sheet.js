@@ -75,6 +75,13 @@ export default class OsoreActorSheet extends ActorSheet {
                     current.roll_difficult = REVERS_DICE[roll.terms[0].results[0].result]
                 } else {
                     current.roll_difficult = 10
+                    if (!current.status.threat1) {
+                        current.status.threat1 = true
+                    } else if (!current.status.threat2) {
+                        current.status.threat2 = true
+                    } else if (!current.status.threat3) {
+                        current.status.threat3 = true
+                    }
                 }
                 roll.toMessage({
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),

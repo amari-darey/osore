@@ -68,9 +68,9 @@
       <div class="description-line">
         <h5>УГРОЗА ЖИЗНИ</h5>
         <div class="checkbox-group">
-          <input type="checkbox" name="{{activePath}}.status.threat1" {{#if current.status.threat1}}checked{{/if}}>
-          <input type="checkbox" name="{{activePath}}.status.threat2" {{#if current.status.threat2}}checked{{/if}}>
-          <input type="checkbox" name="{{activePath}}.status.threat3" {{#if current.status.threat3}}checked{{/if}}>
+          <input type="image" src="systems/osore/assets/{{#if current.status.threat1}}check{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat1">
+          <input type="image" src="systems/osore/assets/{{#if current.status.threat2}}check{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat2">
+          <input type="image" src="systems/osore/assets/{{#if current.status.threat3}}death{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat3">
         </div>
       </div>
     </div>
