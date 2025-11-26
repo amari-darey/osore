@@ -230,7 +230,7 @@ const START_POSITION = {
     8: {"value": "Дом", "modified": ""},
     9: {"value": "Отель", "modified": ""},
     10: {"value": "Парк", "modified": ""},
-    11: {"value": "Магизин", "modified": ""},
+    11: {"value": "Магазин", "modified": ""},
     12: {"value": "Фестиваль", "modified": ""},
     13: {"value": "Гос. учереждение", "modified": ""},
     14: {"value": "Школа", "modified": "+1mind"},
@@ -249,4 +249,19 @@ export const PARAMETRS = {
     "interests": INTERESTS,
     "goal": GOAL,
     "startPosition": START_POSITION
+}
+
+export const TRANSLATE = {
+    "occupation": "род занятий",
+    "look": "внешний вид",
+    "behaviour": "поведения",
+    "interests": "интересы",
+    "goal": "цель",
+    "startPosition": "начальная позиция",
+    "complexion": "комплекция",
+    "mind": "разум",
+    "character": "характер",
+    "endurance": "стойкость",
+    "all": "все",
+    "not": "нет" 
 }

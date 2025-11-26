@@ -1,5 +1,5 @@
-import { REVERS_DICE, SCHEME, PARAMETRS } from "./constant.js";
-import { parseString, drawGraphLines} from "./utils.js"
+import { REVERS_DICE, SCHEME, PARAMETRS, TRANSLATE } from "./constant.js";
+import { parseString, drawGraphLines, askOrder} from "./utils.js"
 
 
 export default class OsoreActorSheet extends ActorSheet {
@@ -68,6 +68,8 @@ export default class OsoreActorSheet extends ActorSheet {
     }
 
     async filling_character_sheet() {
+        let result_message = ``
+
         const data = this.actor.system;
         const currentChar = data.activeCharacter;
         const charKey = `character_${currentChar}`;
@@ -78,7 +80,8 @@ export default class OsoreActorSheet extends ActorSheet {
         if (!roll) return
         const result_roll = roll.terms[0].results.map(r => r.result)
         const revers_result_roll = result_roll.map(r => REVERS_DICE[r])
-        console.log(result_roll, revers_result_roll)
+
+        result_message += `Результаты бросков ${result_roll.join(" ")}\n`
 
         if (result_roll[0] == 4) {
             result_roll[0] = await this._pick("Выберите схему", ["1", "2", "3"])
@@ -97,15 +100,15 @@ export default class OsoreActorSheet extends ActorSheet {
 
         const schema = SCHEME[result_roll[0]]
         current.schema = result_roll[0]
-        console.log("Схема номер:", result_roll[0])
+        result_message = result_message + `Схема: ${result_roll[0]}\n`
 
         let updatedData = foundry.utils.duplicate(current);
         const links = ["link1", "link2", "link3"]
         for (let index = 0; index < 3; index++) {
             if (![4, 8, 12, 16, 20].includes(result_roll[0])) {
-                console.log("schema not pass")
-                const x = schema[links[index]][0]
-                const y = schema[links[index]][1]
+                const parametrs = await askOrder(schema[links[index]], result_roll[index+1])
+                const x = parametrs[0]
+                const y = parametrs[1]
 
                 const parametr1 = PARAMETRS[x][result_roll[index+1]]
                 const parametr2 = PARAMETRS[y][revers_result_roll[index+1]]
@@ -114,6 +117,15 @@ export default class OsoreActorSheet extends ActorSheet {
                 const modifier2 = parseString(parametr2.modified)
                 foundry.utils.setProperty(updatedData, `info.${x}`, parametr1.value)
                 foundry.utils.setProperty(updatedData, `info.${y}`, parametr2.value)
+
+                let text_modifier1 = modifier1.text
+                if (!text_modifier1) text_modifier1 = "not"
+
+                let text_modifier2 = modifier2.text
+                if (!text_modifier2) text_modifier2 = "not"
+
+                result_message += `${TRANSLATE[x]}: ${parametr1.value} | ${TRANSLATE[text_modifier1]}/ ${modifier1.number}\n`
+                result_message += `${TRANSLATE[y]}: ${parametr2.value} | ${TRANSLATE[text_modifier2]}/ ${modifier2.number}\n`
 
                 if (modifier1.text) {
                     if (modifier1.text != "all") {
@@ -141,13 +153,11 @@ export default class OsoreActorSheet extends ActorSheet {
             }
         }
         await this.actor.update({ [`system.${charKey}`]: updatedData });
-        console.log(this.actor.system)
+        this._show_message(result_message)
     }
 
     _set_stats(data, path, modifier) {
         const currentValue = foundry.utils.getProperty(data, path);
-
-        console.log(`Параметр ${modifier.text} был ${currentValue} будет ${currentValue + modifier.number}`)
 
         const meta = foundry.utils.getProperty(data, `stats.${modifier.text}`);
 
@@ -218,6 +228,31 @@ export default class OsoreActorSheet extends ActorSheet {
 
             dlg.render(true);
         });
+    }
+
+    _show_message(text) {
+        text = text.replace(/\n/g, "<br>");
+        const content = `
+            <div style="
+                padding: 15px;
+                font-size: 14px;
+                line-height: 1.4;
+            ">
+                ${text}
+            </div>
+        `;
+
+        new Dialog({
+            title: "Сообщение",
+            content,
+            buttons: {
+                ok: {
+                    label: "OK",
+                    callback: () => {}   // просто закрыть
+                }
+            },
+            default: "ok"
+        }).render(true);
     }
 
 }
