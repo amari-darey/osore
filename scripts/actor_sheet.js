@@ -64,6 +64,21 @@ export default class OsoreActorSheet extends ActorSheet {
             this.filling_character_sheet()
         })
 
+        html.find(".stat-name").click(async el => {
+            const charKey = `character_${this.actor.system.activeCharacter}.stats.${el.currentTarget.dataset.stat}`;
+            const skill = foundry.utils.getProperty(this.actor.system, charKey);
+            if (skill) {
+                const roll = new Roll(`1d20+${skill.value}`);
+                await roll.evaluate();
+                roll.toMessage({
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                    flavor: `Проверка навыка: <b>${TRANSLATE[el.currentTarget.dataset.stat]}</b>`,
+                });
+            } else {
+                console.error("Skill is", skill)
+            }
+        })
+
         requestAnimationFrame(() => drawGraphLines(html));
     }
 
