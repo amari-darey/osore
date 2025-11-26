@@ -114,7 +114,7 @@ export default class OsoreActorSheet extends ActorSheet {
                 const modifier2 = parseString(parametr2.modified)
                 foundry.utils.setProperty(updatedData, `info.${x}`, parametr1.value)
                 foundry.utils.setProperty(updatedData, `info.${y}`, parametr2.value)
-                
+
                 if (modifier1.text) {
                     if (modifier1.text != "all") {
                         const path = `stats.${modifier1.text}.value`;
@@ -122,7 +122,7 @@ export default class OsoreActorSheet extends ActorSheet {
                     } else {
                         ["complexion", "mind", "character", "endurance"].forEach((item) => {
                             const path = `stats.${item}.value`;
-                            this._set_stats(updatedData, path, modifier1)
+                            this._set_stats(updatedData, path, {"number": modifier1.number, "text": item})
                         });
                     }
                 }
@@ -133,7 +133,7 @@ export default class OsoreActorSheet extends ActorSheet {
                     } else {
                         ["complexion", "mind", "character", "endurance"].forEach((item) => {
                             const path = `stats.${item}.value`;
-                            this._set_stats(updatedData, path, modifier2)
+                            this._set_stats(updatedData, path, {"number": modifier2.number, "text": item})
                         });
                     }
                 }
