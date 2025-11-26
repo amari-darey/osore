@@ -5,6 +5,7 @@
             "common": {
                 "activeCharacter": 1,
                 "character_1": {
+                    "schema": 0,
                     "info": {
                         "occupation": "",
                         "look": "",
@@ -80,6 +81,7 @@
                     }
                 },
                 "character_2": {
+                    "schema": 0,
                     "info": {
                         "occupation": "",
                         "look": "",
@@ -155,6 +157,7 @@
                     }
                 },
                 "character_3": {
+                    "schema": 0,
                     "info": {
                         "occupation": "",
                         "look": "",
@@ -230,6 +233,7 @@
                     }
                 },
                 "character_4": {
+                    "schema": 0,
                     "info": {
                         "occupation": "",
                         "look": "",

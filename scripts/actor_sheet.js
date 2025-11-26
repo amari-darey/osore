@@ -31,6 +31,7 @@ export default class OsoreActorSheet extends ActorSheet {
         const stats = current.stats;
 
         data.current = current;
+        data.schema = current.schema
         data.activePath = `system.character_${currentChar}`;
         data.isActive1 = currentChar === 1;
         data.isActive2 = currentChar === 2;
@@ -95,6 +96,7 @@ export default class OsoreActorSheet extends ActorSheet {
         }
 
         const schema = SCHEME[result_roll[0]]
+        current.schema = result_roll[0]
         console.log("Схема номер:", result_roll[0])
 
         let updatedData = foundry.utils.duplicate(current);
