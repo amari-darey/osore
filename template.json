@@ -5,6 +5,8 @@
             "common": {
                 "activeCharacter": 1,
                 "character_1": {
+                    "id": 1,
+                    "image_path": "systems/osore/assets/avatar1.png",
                     "schema": 0,
                     "roll_difficult": 10,
                     "info": {
@@ -48,6 +50,8 @@
                     }
                 },
                 "character_2": {
+                    "id": 2,
+                    "image_path": "systems/osore/assets/avatar2.png",
                     "schema": 0,
                     "roll_difficult": 10,
                     "info": {
@@ -91,6 +95,8 @@
                     }
                 },
                 "character_3": {
+                    "id": 3,
+                    "image_path": "systems/osore/assets/avatar3.png",
                     "schema": 0,
                     "roll_difficult": 10,
                     "info": {
@@ -134,6 +140,8 @@
                     }
                 },
                 "character_4": {
+                    "id": 4,
+                    "image_path": "systems/osore/assets/avatar4.png",
                     "schema": 0,
                     "roll_difficult": 10,
                     "info": {

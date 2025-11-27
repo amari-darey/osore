@@ -60,6 +60,7 @@ export default class OsoreActorSheet extends ActorSheet {
             const newChar = Number(ev.currentTarget.dataset.character);
             if (!newChar || newChar < 1 || newChar > 4) return;
             await this.actor.update({ "system.activeCharacter": newChar });
+            await this._updateTokenImage(newChar);
         });
 
         html.find(".button-schema-image").click(async ev => {
@@ -67,127 +68,132 @@ export default class OsoreActorSheet extends ActorSheet {
             this.filling_character_sheet()
         })
 
-        html.find(".stat-name").click(async el => {
-            const charKey = `character_${this.actor.system.activeCharacter}`;
-            const current = foundry.utils.getProperty(this.actor.system, charKey);
-            const skill = foundry.utils.getProperty(current, `stats.${el.currentTarget.dataset.stat}`);
-            if (skill) {
-                let update = {}
-                const roll = new Roll(`1d20+${skill.value}`);
-                await roll.evaluate();
-                if (roll.total >= current.roll_difficult) {
-                    update[`system.${charKey}.roll_difficult`] = REVERS_DICE[roll.terms[0].results[0].result];
-                } else {
-                    current.roll_difficult = 10
-                    if (!current.status.threat1) {
-                        update[`system.${charKey}.status.threat1`] = true;
-                    } else if (!current.status.threat2) {
-                        update[`system.${charKey}.status.threat2`] = true;
-                    } else if (!current.status.threat3) {
-                        update[`system.${charKey}.status.threat3`] = true;
-                    }
-                }
-                await this.actor.update(update);
-                roll.toMessage({
-                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flavor: `Проверка навыка: <b>${TRANSLATE[el.currentTarget.dataset.stat]}</b>`,
-                });
-            } else {
-                console.error("Skill is", skill)
-            }
-            this.render(true);
-        })
+        html.find(".stat-name").click(async el => this._rollStat(el.currentTarget.dataset.stat))
+
+        html.find(".avatar-select").click(ev => this._onAvatarSelect(ev));
 
         requestAnimationFrame(() => drawGraphLines(html));
+    }
+
+    getCurrentCharacter() {
+        const data = this.actor.system;
+        const currentChar = data.activeCharacter;
+        const charKey = `character_${currentChar}`;
+        const current = foundry.utils.getProperty(this.actor.system, charKey);
+        return current
+    }
+
+    async _updateTokenImage(char) {
+        const current = this.getCurrentCharacter()
+
+        await this.actor.update({
+            img: current.image_path,
+            "prototypeToken.texture.src": current.image_path
+        });
+
+        const tokens = this.actor.getActiveTokens();
+        for (const token of tokens) {
+            await token.document.update({ "texture.src": current.image_path });
+        }
+    }
+
+    async _onAvatarSelect(event) {
+        event.preventDefault();
+
+        const current = this.getCurrentCharacter();
+        const currentImg = current.image_path;
+
+        const fp = new FilePicker({
+            type: "image",
+            current: currentImg,
+            callback: async (path) => {
+                
+                await this.actor.update({
+                    [`system.character_${current.id}.image_path`]: path,
+                    img: path,
+                    "prototypeToken.texture.src": path
+                });
+
+                for (const t of this.actor.getActiveTokens()) {
+                    await t.document.update({ "texture.src": path });
+                }
+
+                this.render(true);
+            }
+        });
+
+        fp.browse();
     }
 
     async filling_character_sheet() {
         let result_message = ``
 
-        const data = this.actor.system;
-        const currentChar = data.activeCharacter;
-        const charKey = `character_${currentChar}`;
-        const current = foundry.utils.getProperty(this.actor.system, charKey);
+        const current = this.getCurrentCharacter()
         if (!current) return
+
         const roll = new Roll("4d20");
         await roll.evaluate();
         if (!roll) return
+
         const result_roll = roll.terms[0].results.map(r => r.result)
         const revers_result_roll = result_roll.map(r => REVERS_DICE[r])
 
         result_message += `Результаты бросков ${result_roll.join(" ")}\n`
 
-        if (result_roll[0] == 4) {
-            result_roll[0] = await this._pick("Выберите схему", ["1", "2", "3"])
-        } else if (result_roll[0] == 8) {
-            result_roll[0] = await this._pick("Выберите схему", ["5", "6", "7"])
-        }
-        else if (result_roll[0] == 12) {
-            result_roll[0] = await this._pick("Выберите схему", ["9", "10", "11"])
-        }
-        else if (result_roll[0] == 16) {
-            result_roll[0] = await this._pick("Выберите схему", ["13", "14", "15"])
-        }
-        else if (result_roll[0] == 20) {
-            result_roll[0] = await this._pick("Выберите схему", ["17", "18", "19"])
-        }
+        result_roll[0] = await this._chooseSchemeNumber(result_roll[0])
 
         const schema = SCHEME[result_roll[0]]
-        current.schema = result_roll[0]
         result_message = result_message + `Схема: ${result_roll[0]}\n`
 
         let updatedData = foundry.utils.duplicate(current);
+        updatedData.schema = result_roll[0]
         const links = ["link1", "link2", "link3"]
         for (let index = 0; index < 3; index++) {
             if (![4, 8, 12, 16, 20].includes(result_roll[0])) {
                 const parametrs = await askOrder(schema[links[index]], result_roll[index+1])
-                const x = parametrs[0]
-                const y = parametrs[1]
+                const highParametrName = parametrs[0]
+                const lowParametrName = parametrs[1]
 
-                const parametr1 = PARAMETRS[x][result_roll[index+1]]
-                const parametr2 = PARAMETRS[y][revers_result_roll[index+1]]
+                const highParametrValue = PARAMETRS[highParametrName][result_roll[index+1]]
+                const lowParametrValue = PARAMETRS[lowParametrName][revers_result_roll[index+1]]
 
-                const modifier1 = parseString(parametr1.modified)
-                const modifier2 = parseString(parametr2.modified)
-                foundry.utils.setProperty(updatedData, `info.${x}`, parametr1.value)
-                foundry.utils.setProperty(updatedData, `info.${y}`, parametr2.value)
+                foundry.utils.setProperty(updatedData, `info.${highParametrName}`, highParametrValue.value)
+                foundry.utils.setProperty(updatedData, `info.${lowParametrName}`, lowParametrValue.value)
 
-                let text_modifier1 = modifier1.text
+                const highParametrMod = parseString(highParametrValue.modified)
+                const lowParametrMod = parseString(lowParametrValue.modified)
+                
+                let text_modifier1 = highParametrMod.text
                 if (!text_modifier1) text_modifier1 = "not"
 
-                let text_modifier2 = modifier2.text
+                let text_modifier2 = lowParametrMod.text
                 if (!text_modifier2) text_modifier2 = "not"
 
-                result_message += `${TRANSLATE[x]}: ${parametr1.value} | ${TRANSLATE[text_modifier1]}/ ${modifier1.number}\n`
-                result_message += `${TRANSLATE[y]}: ${parametr2.value} | ${TRANSLATE[text_modifier2]}/ ${modifier2.number}\n`
+                result_message += `${TRANSLATE[highParametrName]}: ${highParametrValue.value} | ${TRANSLATE[text_modifier1]}/ ${highParametrMod.number}\n`
+                result_message += `${TRANSLATE[lowParametrName]}: ${lowParametrValue.value} | ${TRANSLATE[text_modifier2]}/ ${lowParametrMod.number}\n`
 
-                if (modifier1.text) {
-                    if (modifier1.text != "all") {
-                        const path = `stats.${modifier1.text}.value`;
-                        this._set_stats(updatedData, path, modifier1)
-                    } else {
-                        ["complexion", "mind", "character", "endurance"].forEach((item) => {
-                            const path = `stats.${item}.value`;
-                            this._set_stats(updatedData, path, {"number": modifier1.number, "text": item})
-                        });
-                    }
-                }
-                if (modifier2.text) {
-                    if (modifier2.text != "all") {
-                        const path = `stats.${modifier2.text}.value`;
-                        this._set_stats(updatedData, path, modifier2)
-                    } else {
-                        ["complexion", "mind", "character", "endurance"].forEach((item) => {
-                            const path = `stats.${item}.value`;
-                            this._set_stats(updatedData, path, {"number": modifier2.number, "text": item})
-                        });
-                    }
-                }
-                
+                this._setModifier(updatedData, highParametrMod)
+                this._setModifier(updatedData, lowParametrMod)
             }
         }
-        await this.actor.update({ [`system.${charKey}`]: updatedData });
+        await this.actor.update({ [`system.character_${current.id}`]: updatedData });
         this._show_message(result_message)
+    }
+
+    _setModifier(updatedData, modifier) {
+        let textModifier = modifier.text
+        if (!textModifier) textModifier = "not"
+        if (modifier.text) {
+            if (modifier.text != "all") {
+                const path = `stats.${modifier.text}.value`;
+                this._set_stats(updatedData, path, modifier)
+            } else {
+                ["complexion", "mind", "character", "endurance"].forEach((item) => {
+                    const path = `stats.${item}.value`;
+                    this._set_stats(updatedData, path, {"number": modifier.number, "text": item})
+                });
+            }
+        }
     }
 
     _set_stats(data, path, modifier) {
@@ -264,6 +270,25 @@ export default class OsoreActorSheet extends ActorSheet {
         });
     }
 
+    async _chooseSchemeNumber(schemaRoll) {
+        let result = schemaRoll
+        if (result == 4) {
+            result = await this._pick("Выберите схему", ["1", "2", "3"])
+        } else if (result == 8) {
+            result = await this._pick("Выберите схему", ["5", "6", "7"])
+        }
+        else if (result == 12) {
+            result = await this._pick("Выберите схему", ["9", "10", "11"])
+        }
+        else if (result == 16) {
+            result = await this._pick("Выберите схему", ["13", "14", "15"])
+        }
+        else if (result == 20) {
+            result = await this._pick("Выберите схему", ["17", "18", "19"])
+        }
+        return result
+    }
+
     _show_message(text) {
         text = text.replace(/\n/g, "<br>");
         const content = `
@@ -289,4 +314,33 @@ export default class OsoreActorSheet extends ActorSheet {
         }).render(true);
     }
 
+    async _rollStat(stat) {
+        const current = this.getCurrentCharacter()
+        const skill = foundry.utils.getProperty(current, `stats.${stat}`);
+        if (skill) {
+            let update = {}
+            const roll = new Roll(`1d20+${skill.value}`);
+            await roll.evaluate();
+            if (roll.total >= current.roll_difficult) {
+                update[`system.character_${current.id}.roll_difficult`] = REVERS_DICE[roll.terms[0].results[0].result];
+            } else {
+                current.roll_difficult = 10
+                if (!current.status.threat1) {
+                    update[`system.character_${current.id}.status.threat1`] = true;
+                } else if (!current.status.threat2) {
+                    update[`system.character_${current.id}.status.threat2`] = true;
+                } else if (!current.status.threat3) {
+                    update[`system.character_${current.id}.status.threat3`] = true;
+                }
+            }
+            await this.actor.update(update);
+            roll.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: `Проверка навыка: <b>${TRANSLATE[stat]}</b>`,
+            });
+        } else {
+            console.error("Skill is", skill)
+        }
+        this.render(true);
+    }
 }
