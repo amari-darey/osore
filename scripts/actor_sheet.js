@@ -48,6 +48,10 @@ export default class OsoreActorSheet extends ActorSheet {
         return data;
     }
 
+    async _updateObject(event, formData) {
+        return await this.actor.update(formData);
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
 
@@ -55,8 +59,7 @@ export default class OsoreActorSheet extends ActorSheet {
             ev.preventDefault();
             const newChar = Number(ev.currentTarget.dataset.character);
             if (!newChar || newChar < 1 || newChar > 4) return;
-            this.actor.system.activeCharacter = newChar;
-            this.render(true);
+            await this.actor.update({ "system.activeCharacter": newChar });
         });
 
         html.find(".button-schema-image").click(async ev => {
@@ -69,20 +72,22 @@ export default class OsoreActorSheet extends ActorSheet {
             const current = foundry.utils.getProperty(this.actor.system, charKey);
             const skill = foundry.utils.getProperty(current, `stats.${el.currentTarget.dataset.stat}`);
             if (skill) {
+                let update = {}
                 const roll = new Roll(`1d20+${skill.value}`);
                 await roll.evaluate();
                 if (roll.total >= current.roll_difficult) {
-                    current.roll_difficult = REVERS_DICE[roll.terms[0].results[0].result]
+                    update[`system.${charKey}.roll_difficult`] = REVERS_DICE[roll.terms[0].results[0].result];
                 } else {
                     current.roll_difficult = 10
                     if (!current.status.threat1) {
-                        current.status.threat1 = true
+                        update[`system.${charKey}.status.threat1`] = true;
                     } else if (!current.status.threat2) {
-                        current.status.threat2 = true
+                        update[`system.${charKey}.status.threat2`] = true;
                     } else if (!current.status.threat3) {
-                        current.status.threat3 = true
+                        update[`system.${charKey}.status.threat3`] = true;
                     }
                 }
+                await this.actor.update(update);
                 roll.toMessage({
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                     flavor: `Проверка навыка: <b>${TRANSLATE[el.currentTarget.dataset.stat]}</b>`,
@@ -277,7 +282,7 @@ export default class OsoreActorSheet extends ActorSheet {
             buttons: {
                 ok: {
                     label: "OK",
-                    callback: () => {}   // просто закрыть
+                    callback: () => {}
                 }
             },
             default: "ok"
