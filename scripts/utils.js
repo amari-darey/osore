@@ -66,146 +66,8 @@ export async function askOrder(skills, dice) {
     const param1 = skills[0];
     const param2 = skills[1];
     const revers_dice = REVERS_DICE[dice];
-
-    return await new Promise(resolve => {
-        const content = `
+    const content = `
         <div class="osore-order-dialog">
-            <style>
-                .osore-order-dialog {
-                    font-family: Inter, sans-serif;
-                    color: var(--ink, #111);
-                }
-
-                .osore-order-container {
-                    background: var(--paper, #fbf9f7);
-                    border: 6px solid var(--ink, #0a0a0a);
-                    box-shadow: 8px 8px 0 rgba(0,0,0,0.06);
-                    padding: 20px;
-                    border-radius: 8px;
-                    max-width: 500px;
-                }
-
-                .osore-order-title {
-                    font-weight: 800;
-                    letter-spacing: 0.6px;
-                    text-transform: uppercase;
-                    color: var(--ink, #111);
-                    font-size: 17px;
-                    margin-bottom: 16px;
-                    text-align: center;
-                }
-
-                .osore-order-description {
-                    color: var(--muted, #6b6b6b);
-                    font-size: 14px;
-                    margin-bottom: 20px;
-                    text-align: center;
-                    font-style: italic;
-                }
-
-                .osore-order-options {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px;
-                }
-
-                .osore-order-option {
-                    background: white;
-                    border: 2px solid rgba(0,0,0,0.08);
-                    border-radius: 6px;
-                    padding: 16px;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                    position: relative;
-                }
-
-                .osore-order-option:hover {
-                    background: rgba(0,0,0,0.03);
-                    border-color: var(--ink, #0a0a0a);
-                }
-
-                .osore-order-option input[type="radio"] {
-                    position: absolute;
-                    opacity: 0;
-                    cursor: pointer;
-                }
-
-                .osore-order-option-label {
-                    display: block;
-                    padding-left: 28px;
-                    position: relative;
-                    cursor: pointer;
-                }
-
-                .osore-order-option-label::before {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 18px;
-                    height: 18px;
-                    border: 2px solid rgba(0,0,0,0.3);
-                    border-radius: 50%;
-                    background: white;
-                }
-
-                .osore-order-option input[type="radio"]:checked + .osore-order-option-label::before {
-                    background: var(--ink, #0a0a0a);
-                    border-color: var(--ink, #0a0a0a);
-                }
-
-                .osore-order-option-title {
-                    font-weight: 700;
-                    color: var(--ink, #111);
-                    margin-bottom: 4px;
-                    font-size: 15px;
-                }
-
-                .osore-order-option-values {
-                    color: var(--muted, #6b6b6b);
-                    font-size: 14px;
-                    margin-top: 2px;
-                }
-
-                .osore-order-buttons {
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 12px;
-                    margin-top: 20px;
-                    padding-top: 15px;
-                    border-top: 1px solid rgba(0,0,0,0.1);
-                }
-
-                .osore-order-buttons button {
-                    padding: 8px 20px;
-                    background: white;
-                    border: 2px solid rgba(0,0,0,0.08);
-                    border-radius: 6px;
-                    font-family: inherit;
-                    font-size: 14px;
-                    color: var(--ink, #111);
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                }
-
-                .osore-order-buttons button:hover {
-                    background: rgba(0,0,0,0.03);
-                    border-color: var(--ink, #0a0a0a);
-                }
-
-                .osore-order-buttons .cancel {
-                    background: rgba(217, 83, 79, 0.1);
-                    border-color: rgba(217, 83, 79, 0.3);
-                    color: rgba(217, 83, 79, 0.8);
-                }
-
-                .osore-order-buttons .cancel:hover {
-                    background: rgba(217, 83, 79, 0.2);
-                    border-color: rgba(217, 83, 79, 0.5);
-                }
-            </style>
-
             <div class="osore-order-container">
                 <div class="osore-order-title">ВЫБОР ПОРЯДКА</div>
                 <div class="osore-order-description">Выберите, какой навык будет основным</div>
@@ -239,7 +101,8 @@ export async function askOrder(skills, dice) {
         </div>
         `;
 
-        const dlg = new Dialog({
+    return await new Promise(resolve => {
+        new Dialog({
             title: "",
             content,
             buttons: {
@@ -258,9 +121,7 @@ export async function askOrder(skills, dice) {
             default: "ok",
             classes: ["osore-dialog"],
             close: () => {}
-        });
-
-        dlg.render(true);
+        }).render(true);
     });
 }
 

@@ -153,6 +153,8 @@ export default class OsoreActorSheet extends ActorSheet {
         for (let index = 0; index < 3; index++) {
             if (![4, 8, 12, 16, 20].includes(result_roll[0])) {
                 const parametrs = await askOrder(schema[links[index]], result_roll[index+1])
+                if (!parametrs) return
+                
                 const highParametrName = parametrs[0]
                 const lowParametrName = parametrs[1]
 
@@ -303,7 +305,8 @@ export default class OsoreActorSheet extends ActorSheet {
             let update = {}
             const roll = new Roll(`1d20+${skill.value}`);
             await roll.evaluate();
-            if (roll.total >= current.roll_difficult) {
+            const success = roll.total >= current.roll_difficult;
+            if (success) {
                 update[`system.character_${current.id}.roll_difficult`] = REVERS_DICE[roll.terms[0].results[0].result];
             } else {
                 current.roll_difficult = 10
@@ -316,9 +319,27 @@ export default class OsoreActorSheet extends ActorSheet {
                 }
             }
             await this.actor.update(update);
+            const resultHtml = `
+                <div style="
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    margin-top: 6px;
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: white;
+                    text-align: center;
+                    background: ${success ? "#2ecc71" : "#e74c3c"};
+                ">
+                    ${success ? "УСПЕХ" : "ПРОВАЛ"}
+                </div>
+            `;
             roll.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor: `Проверка навыка: <b>${TRANSLATE[stat]}</b>`,
+                flavor: `
+                    ${current.info.name}:
+                    Проверка навыка: <b>${TRANSLATE[stat]}</b>
+                    ${resultHtml}
+                `,
             });
         } else {
             console.error("Skill is", skill)
