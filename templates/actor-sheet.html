@@ -1,6 +1,6 @@
 <form class="sheet actor osore-sheet" data-actor-id="{{actor.id}}">
   {{#if current.status.threat3}}
-  <img src="systems/osore/assets/death_final.png" class="form-overlay">
+  <img src="systems/osore/assets/img/death_final.png" class="form-overlay">
   {{/if}}
   <div class="character-switcher">
     <button type="button" class="char-btn {{#if isActive1}}active{{/if}}" data-character="1">Персонаж 1</button>
@@ -71,14 +71,14 @@
       <div class="description-line">
         <h5>УГРОЗА ЖИЗНИ</h5>
         <div class="checkbox-group">
-          <input type="image" src="systems/osore/assets/{{#if current.status.threat1}}check{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat1" readonly>
-          <input type="image" src="systems/osore/assets/{{#if current.status.threat2}}check{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat2" readonly>
-          <input type="image" src="systems/osore/assets/{{#if current.status.threat3}}death{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat3" readonly>
+          <input type="image" src="systems/osore/assets/img/{{#if current.status.threat1}}check{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat1" readonly>
+          <input type="image" src="systems/osore/assets/img/{{#if current.status.threat2}}check{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat2" readonly>
+          <input type="image" src="systems/osore/assets/img/{{#if current.status.threat3}}death{{else}}uncheck{{/if}}.png" class="death-input" name="{{activePath}}.status.threat3" readonly>
         </div>
       </div>
     </div>
     <div class="col-dice">
-      <img src="systems/osore/assets/revers_dice.png" alt="revers_dice">
+      <img src="systems/osore/assets/img/revers_dice.png" alt="revers_dice">
     </div>
   </div>
 
