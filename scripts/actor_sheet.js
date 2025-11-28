@@ -1,5 +1,5 @@
 import { REVERS_DICE, SCHEME, PARAMETRS, TRANSLATE } from "./constant.js";
-import { parseString, drawGraphLines, askOrder} from "./utils.js"
+import { parseString, drawGraphLines, askOrder, getResultHtml, getChooseSchemeHtml} from "./utils.js"
 
 
 export default class OsoreActorSheet extends ActorSheet {
@@ -126,7 +126,9 @@ export default class OsoreActorSheet extends ActorSheet {
     }
 
     async filling_character_sheet() {
-        let result_message = ``
+        let result_message = {
+            "parameters": []
+        }
 
         const current = this.getCurrentCharacter()
         if (!current) return
@@ -138,12 +140,12 @@ export default class OsoreActorSheet extends ActorSheet {
         const result_roll = roll.terms[0].results.map(r => r.result)
         const revers_result_roll = result_roll.map(r => REVERS_DICE[r])
 
-        result_message += `Результаты бросков ${result_roll.join(" ")}\n`
+        result_message["rolls"] = result_roll
 
         result_roll[0] = await this._chooseSchemeNumber(result_roll[0])
 
         const schema = SCHEME[result_roll[0]]
-        result_message = result_message + `Схема: ${result_roll[0]}\n`
+        result_message["scheme"] = result_roll[0]
 
         let updatedData = foundry.utils.duplicate(current);
         updatedData.schema = result_roll[0]
@@ -169,8 +171,20 @@ export default class OsoreActorSheet extends ActorSheet {
                 let text_modifier2 = lowParametrMod.text
                 if (!text_modifier2) text_modifier2 = "not"
 
-                result_message += `${TRANSLATE[highParametrName]}: ${highParametrValue.value} | ${TRANSLATE[text_modifier1]}/ ${highParametrMod.number}\n`
-                result_message += `${TRANSLATE[lowParametrName]}: ${lowParametrValue.value} | ${TRANSLATE[text_modifier2]}/ ${lowParametrMod.number}\n`
+                result_message.parameters.push(
+                    {
+                        "name": TRANSLATE[highParametrName],
+                        "value": highParametrMod.number,
+                        "modifier": TRANSLATE[text_modifier1]
+                    }
+                )
+                result_message.parameters.push(
+                    {
+                        "name": TRANSLATE[lowParametrName],
+                        "value": lowParametrMod.number,
+                        "modifier": TRANSLATE[text_modifier2]
+                    }
+                )
 
                 this._setModifier(updatedData, highParametrMod)
                 this._setModifier(updatedData, lowParametrMod)
@@ -210,60 +224,35 @@ export default class OsoreActorSheet extends ActorSheet {
 
     _pick(title, options = [], hint = "", showBackButton = false) {
         return new Promise((resolve, reject) => {
-            const content = `
-            <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-                        color: #e0e0e0; 
-                        background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-                        padding: 20px; 
-                        border-radius: 12px; 
-                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);">
-                
-                <div style="margin-bottom: 15px; padding: 12px; background: rgba(30, 30, 30, 0.7);
-                            border-left: 3px solid #ff4757; border-radius: 0 8px 8px 0;
-                            font-style: italic; color: #a0a0a0; font-size: 14px;">
-                ${hint}
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                ${options.map((o, i) => `
-                    <button class="dryh-pick-button" data-value="${o}"
-                    style="padding: 12px; width: 100%; border-radius: 10px; border: none;
-                            background: rgba(40, 40, 40, 0.85); 
-                            color: #e0e0e0; font-size: 15px;
-                            cursor: pointer; transition: all 0.25s ease;">
-                    ${o}
-                    </button>
-                `).join("")}
-                </div>
-            </div>
-            `;
-
-            const buttons = {
-            cancel: {
-                label: "Отмена",
-                callback: () => reject("cancelled")
-            }
-            };
-
-            if (showBackButton) {
-            buttons.back = {
-                label: "Назад",
-                callback: () => reject("back")
-            };
-            }
+            const content = getChooseSchemeHtml(title, options, hint)
 
             const dlg = new Dialog({
-            title,
-            content,
-            buttons,
-            default: "cancel",
-            render: html => {
-                html.find(".dryh-pick-button").click(ev => {
-                const value = ev.currentTarget.dataset.value;
-                dlg.close();
-                resolve(value);
-                });
-            }
+                title: "",
+                content,
+                buttons: {
+                    cancel: {
+                        label: "Отмена",
+                        callback: () => reject("cancelled")
+                    }
+                },
+                default: "cancel",
+                render: html => {
+                    html.find(".osore-pick-button").click(ev => {
+                        const value = ev.currentTarget.dataset.value;
+                        dlg.close();
+                        resolve(value);
+                    });
+
+                    if (showBackButton) {
+                        const backButton = $(`<button class="osore-back-button">Назад</button>`);
+                        html.find(".osore-pick-buttons").prepend(backButton);
+                        backButton.click(() => {
+                            dlg.close();
+                            reject("back");
+                        });
+                    }
+                },
+                classes: ["osore-dialog"]
             });
 
             dlg.render(true);
@@ -289,28 +278,21 @@ export default class OsoreActorSheet extends ActorSheet {
         return result
     }
 
-    _show_message(text) {
-        text = text.replace(/\n/g, "<br>");
-        const content = `
-            <div style="
-                padding: 15px;
-                font-size: 14px;
-                line-height: 1.4;
-            ">
-                ${text}
-            </div>
-        `;
+    _show_message(result) {
+        if (!result || typeof result !== "object") return;
+
+        const { scheme, rolls = [], parameters = [] } = result;
+
+        const content = getResultHtml(scheme, rolls, parameters)
 
         new Dialog({
-            title: "Сообщение",
+            title: "Создание персонажа",
             content,
             buttons: {
-                ok: {
-                    label: "OK",
-                    callback: () => {}
+                close: {
+                    label: "Закрыть"
                 }
-            },
-            default: "ok"
+            }
         }).render(true);
     }
 
