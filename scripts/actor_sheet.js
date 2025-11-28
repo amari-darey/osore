@@ -309,7 +309,7 @@ export default class OsoreActorSheet extends ActorSheet {
             if (success) {
                 update[`system.character_${current.id}.roll_difficult`] = REVERS_DICE[roll.terms[0].results[0].result];
             } else {
-                current.roll_difficult = 10
+                update[`system.character_${current.id}.roll_difficult`] = 10
                 if (!current.status.threat1) {
                     update[`system.character_${current.id}.status.threat1`] = true;
                 } else if (!current.status.threat2) {
