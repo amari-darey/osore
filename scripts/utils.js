@@ -101,9 +101,9 @@ export async function askOrder(skills, dice) {
         </div>
         `;
 
-    return await new Promise(resolve => {
+    return new Promise(resolve => {
         new Dialog({
-            title: "",
+            title: "Выбо верхнего значения",
             content,
             buttons: {
                 ok: {
@@ -243,6 +243,7 @@ export function getChooseSchemeHtml(title, options = [], hint = "") {
                 </div>
             </div>
             `;
+    return content
 }
 
 export function getResultHtml(scheme, rolls, parameters){

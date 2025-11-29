@@ -229,7 +229,7 @@ export default class OsoreActorSheet extends ActorSheet {
             const content = getChooseSchemeHtml(title, options, hint)
 
             const dlg = new Dialog({
-                title: "",
+                title: "Выбор схемы",
                 content,
                 buttons: {
                     cancel: {
