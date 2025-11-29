@@ -1,10 +1,14 @@
 {
   "id": "osore",
-  "name": "osore",
   "title": "OSORE",
-  "description": "You can’t sleep. It started like that for all of us, back when we were garden variety insomniacs. Maybe you had nightmares (God knows we all do now), or maybe you just had problems that wouldn’t let you sleep. Hell, maybe you were just over-caffienated. But then something clicked.",
-  "author": "Amari",
-  "version": 0.01, 
+  "description": "Osore - страх, боязнь чего-либо. Именно этому посвящена данная настольная ролевая игра. В ней вы познакомитесь с ужасом, который охватывает героев многих хоррор-манг посвящённых апокалипсису, боди-хоррору, инфекциям, выживанию, массовым смертям и многому другому.",
+  "authors": [
+    {
+      "name": "Amari",
+      "flags": {}
+    }
+  ],
+  "version": 1.00, 
   "compatibility": {
     "minimum": "13",
     "verified": "13.350",
